@@ -1936,11 +1936,18 @@ Quel gaz apparaît lors de la combustion incomplète du butane~?
       </sect3>
       
       
-      <sect3>
+     <sect3>
       <title>Définir la zone de notation</title>
-      En mode <emphasis>ensemble</emphasis>, vous pouvez ajouter une option suplémentaire de zone de notation (voir   <xref linkend="position.note"/>).
-      
+      <para>En mode <emphasis>ensemble</emphasis>, vous pouvez ajouter une option suplémentaire de zone de notation (voir   <xref linkend="position.note"/>).</para>
+      <para>On peut aussi utiliser les zones prédéfinies toutes faites, avec par exemple : </para>
+<programlisting>\AMCsetScoreZone{width=1.5em,height=1.5ex,depth=.5ex,position=margins}</programlisting>
+<par>Les grandeurs width, height, depth définissent les dimensions de la case de notation ainsi que son emplacement sur la feuille du sujet.</par>
+      <programlisting>\AMCsetScoreZoneAnswerSheet{width=1.5em,height=1.5ex,depth=.5ex,position=question}</programlisting>
+      <par>Les grandeurs width, height, depth définissent les dimensions de la case de notation ainsi que son emplacement sur la feuille de réponse.</par>
+
+<par>position peut prendre les valeurs : none, question, margin, margins</par>.
       </sect3>
+
 
       <sect3>
         <title>Groupes de questions</title>

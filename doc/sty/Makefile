@@ -21,20 +21,31 @@ SHELL=/bin/sh
 
 PACK=automultiplechoice
 
+SAMPLES=$(wildcard sample-*.tex)
+
 all: FORCE
 	pdflatex $(PACK).dtx
-	pdflatex sample-amc.tex
-	pdflatex sample-separate.tex
-	pdflatex sample-plain.tex
+	$(MAKE) $(SAMPLES:.tex=.pdf)
 	makeindex -s gglo.ist -o $(PACK).gls $(PACK).glo
 	makeindex -s gind.ist -o $(PACK).ind $(PACK).idx
 	pdflatex $(PACK).dtx
 	pdflatex $(PACK).dtx
+	perl -pi -e 's:/ID \[<[A-F0-9]+> <[A-F0-9]+>\]:/ID [<00> <00>]:i' $(PACK).pdf
 	$(MAKE) postclean
 
+sample-%.datetex.in: sample-%.tex
+	perl -pe 's!\\begin{document}!\\begin{document}\\pdfinfo{/CreationDate (D:@/PACKAGE_V_PDFDATE/@) /ModDate (D:@/PACKAGE_V_PDFDATE/@)}!;' < $< > $@
+
+sample-%.datetex: sample-%.datetex.in
+	$(MAKE) -C ../.. doc/sty/$@
+
+sample-%.pdf: sample-%.datetex
+	pdflatex -jobname sample-$* $<
+	perl -pi -e 's:/ID \[<[A-F0-9]+> <[A-F0-9]+>\]:/ID [<00> <00>]:i' $@
+
 postclean:
-	rm -f pexa-*
-	rm -f $(foreach ext,amc aux dvi glo gls idx ilg ind log out toc xy xy1 xy2 xy3,*.$(ext))
+	-rm -f pexa-*
+	-rm -f $(foreach ext,amc aux dvi glo gls idx ilg ind log out toc xy xy1 xy2 xy3,*.$(ext))
 
 clean: postclean
 	rm -f *~

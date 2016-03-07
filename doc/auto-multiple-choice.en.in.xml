@@ -1596,7 +1596,8 @@ Durée : 10 minutes.
             <para><option>lang=<replaceable>XX</replaceable></option>: sets
             the subject language to <replaceable>XX</replaceable>. At present,
             only DE (German), ES (Spanish), FR (French), IT (Italian), JA
-            (Japanese) and NL (Dutch) are available. Several strings added by
+            (Japanese), NL (Dutch), NO (Norwegian) and PT (Portuguese) are
+            available. Several strings added by
             <package>automultiplechoice</package> will be translated, such as
             "None of these answers are correct", see option
             <option>completemulti</option>.</para>
@@ -1726,9 +1727,6 @@ Durée : 10 minutes.
             circles, you may communicate this option to automultiplechoice to
             use <option>\storebox</option> rather than
             <option>\savebox</option> to store the design of the boxes.</para>
-
-            <para><package>\storebox</package> must be loaded in
-            preamble.</para>
           </listitem>
 
           <listitem>
@@ -1763,20 +1761,19 @@ Durée : 10 minutes.
 
         <programlisting>\onecopy{50}{ ... }</programlisting>
 
-        <para>If you have downloaded the LaTeX package
-        <package>environ</package> <emphasis>before</emphasis>
-        <package>automultiplechoice</package>, an alternative syntax is
-        available, using the <command>examcopy</command> environment, where
-        the number of realizations is an option (default is 5).</para>
+        <para>An alternative syntax is available, using the
+        <command>examcopy</command> environment, where the number of
+        realizations is an option (default is 5).</para>
 
         <programlisting>\begin{examcopy}[50]
 ...
 \end{examcopy}</programlisting>
 
         <note>
-          <para>The <package>environ</package> package is not available in the
-          TeX Live 2007 distribution, which is still used in Ubuntu
-          distributions up to version 9.10 (Karmic Koala).</para>
+          <para>To use examcopy, you need the <package>environ</package>
+          package to be installed, which is not available in the TeX Live 2007
+          distribution, still used in Ubuntu distributions up to version 9.10
+          (Karmic Koala).</para>
         </note>
       </sect3>
 
@@ -1889,6 +1886,34 @@ Durée : 10 minutes.
     \wrongchoice{a lot}
   \end{choiceshoriz}
 \end{questionmult}        </programlisting>
+        </sect4>
+
+        <sect4>
+          <title>Question numbers</title>
+
+          <para>One can modify the number of the next question with the
+          <code>\AMCnumero command</code>. At the beginning of each
+          realization of the test, a call to</para>
+
+          <para><programlisting>\AMCnumero{1}</programlisting></para>
+
+          <para>is performed, but this command can be used at any
+          place.</para>
+
+          <note>
+            <para>When you want to hide the number for a particular question
+            and do not want to increase the question number, use
+            <command>\AMCquestionNumberfalse</command> command as in the
+            following example:</para>
+
+            <programlisting>{
+  \AMCquestionNumberfalse
+  \def\AMCbeginQuestion#1#2{}
+  \begin{question}
+    ...
+  \end{question}
+}</programlisting>
+          </note>
         </sect4>
       </sect3>
 
@@ -2348,6 +2373,18 @@ Durée : 10 minutes.
             <para><option>crossrule=1.5pt</option> only displayed on the
             answer sheet, is the thickness of the cross.</para>
           </listitem>
+
+          <listitem>
+            <para><option>color=<replaceable>col</replaceable></option> gives
+            the color to be used to draw boxes. The color
+            <replaceable>col</replaceable> must be compatible with the
+            <command>xcolor</command> package. For example, some names such as
+            <replaceable>red</replaceable> can be used. You can also define
+            your proper color, as in</para>
+
+            <programlisting>\definecolor{mylightgreen}{rgb}{0.67,0.88,0.5}
+\AMCboxColor{mylightgreen}</programlisting>
+          </listitem>
         </itemizedlist>
 
         <para>To obtain smaller boxes, one can e.g. use the command</para>
@@ -2381,18 +2418,6 @@ Durée : 10 minutes.
         following example (here we need bold labels):</para>
 
         <programlisting>\def\AMCoutsideLabelFormat#1{\textbf{#1}}</programlisting>
-
-        <para>Also note that the color of the boxes to be ticked by the
-        students can be set using</para>
-
-        <programlisting>\AMCboxColor{red}</programlisting>
-
-        <para>replacing <code>red</code> by the desired color (that must be
-        recognized by the <command>xcolor</command> package). For example, you
-        can get a light green with</para>
-
-        <programlisting>\definecolor{amcboxcolor}{rgb}{0.67,0.88,0.5}
-\AMCboxColor{amcboxcolor}</programlisting>
 
         <note>
           <para>The switch used to tick or not correct answers is
@@ -2435,30 +2460,6 @@ Durée : 10 minutes.
         the others. By default, it displays a club.</para>
 
         <para><programlisting>\def\multiSymbole{$\clubsuit$}</programlisting></para>
-
-        <para>Finally, one can modify the number of the next question with the
-        <code>\AMCnumero command</code>. At the beginning of each realization
-        of the test, a call to</para>
-
-        <para><programlisting>\AMCnumero{1}</programlisting></para>
-
-        <para>is performed, but this command can be used at any place.</para>
-
-        <note>
-          <para>Each question must have a number, even it is not displayed, to
-          make sure of compatibility with cleveref package. When you want to
-          hide the number for a particular question and do not want to
-          increase the number, use <command>\AMCquestionNumberfalse</command>
-          command as in the following example:</para>
-
-          <programlisting>{
-  \AMCquestionNumberfalse
-  \def\AMCbeginQuestion#1#2{}
-  \begin{question}
-    ...
-  \end{question}
-}</programlisting>
-        </note>
 
         <warning>
           <para>With nominative sheets (see <xref
@@ -2650,11 +2651,6 @@ and write your first and last names below.
 
         <para>The first argument to <command>\AMCOpen</command> is a comma
         separated list of options. The available options are:</para>
-
-        <warning>
-          <para>At least one option is requiered to correctly compile the
-          file.</para>
-        </warning>
 
         <variablelist>
           <varlistentry>
@@ -3037,8 +3033,10 @@ and write your first and last names below.
           </listitem>
 
           <listitem>
-            <para><code>\AMCsetFoot{<replaceable>\thepage</replaceable>}</code>
-            displays the page number in the footer.</para>
+            <para><code>\AMCsetFoot{<replaceable>text</replaceable>}</code>
+            sets the footer. Use for example
+            <code>\AMCsetFoot{\thepage}</code> to write the page
+            number.</para>
           </listitem>
         </itemizedlist>
       </sect3>
@@ -3116,16 +3114,6 @@ and write your first and last names below.
     <sect2 id="latex.numerical">
       <title>Mathematical questions with randomized statements</title>
 
-      <para>First of all, you must set the random seed to be sure to get the
-      same result each time latex is run to compile the subject:</para>
-
-      <para><programlisting>\FPseed=<replaceable>integer</replaceable></programlisting></para>
-
-      <note>
-        <para><replaceable>integer</replaceable> must be fixed, and not
-        computed from date/time values.</para>
-      </note>
-
       <sect3 id="latex.numerical.fp">
         <title>Using package fp</title>
 
@@ -3178,6 +3166,15 @@ and write your first and last names below.
             </callout>
           </calloutlist>Variable names beginning with VQ have been chosen so
         as to avoid interference with other LaTeX commands.</para>
+
+        <note>
+          <para>You can set the random seed with</para>
+
+          <para><programlisting>\FPseed=<replaceable>integer</replaceable></programlisting></para>
+
+          <para><replaceable>integer</replaceable> must be fixed, and not
+          computed from date/time values.</para>
+        </note>
 
         <sect4 id="latex.intervals">
           <title>Choosing an interval</title>
@@ -3335,14 +3332,9 @@ respective parameters \VQa{} and \VQb{}.
 
               <listitem>
                 <para>if <code>true</code>, a box has to be ticked for every
-                digit and for the sign. If <code>false</code>, if some digits
-                has no ticked box, they will be set to zero. Defaults to
-                <code>false</code>.</para>
-
-                <warning>
-                  <para>If one box, at least, is not ticked, the answer will
-                  be considered as false.</para>
-                </warning>
+                digit (even null digits) and for the sign. If
+                <code>false</code>, if some digits has no ticked box, they
+                will be set to zero. Defaults to <code>false</code>.</para>
               </listitem>
             </varlistentry>
 
@@ -3497,9 +3489,14 @@ respective parameters \VQa{} and \VQb{}.
                 <code>scoreapprox</code> points (defaults to 0).</para>
 
                 <warning>
-                  <para>AMC handle all numbers (decimals included) as integers
-                  before subtract and compare with <code>approx</code>
-                  .</para>
+                  <para>AMC converts all numbers (decimals included) to
+                  integers (simply removing the decimal point) before
+                  subtracting them and comparing with <code>approx</code>. As
+                  an example, with <code>decimals=2</code>, if the correct
+                  answer is 3.14 and the given answer is 3.2, then the integer
+                  difference is 320-314=6, so that the student gets
+                  <code>scoreapprox</code> points only if <code>approx</code>
+                  is 6 or greater.</para>
                 </warning>
               </listitem>
             </varlistentry>
@@ -3884,52 +3881,45 @@ Name :
         remain identical to distributed copies.</para>
       </important>
 
-      <sect3 id="gui.advice">
-        <title>Advices</title>
+      <para>It is preferable that students use a black or blue pen or B or HB
+      pencil.</para>
 
-        <para>It is preferable that students use a black or blue pen or B or
-        HB pencil.</para>
+      <para>Depending on the situation, you can ask the students to
+      <emphasis>tick</emphasis> or <emphasis>fill</emphasis> the boxes.</para>
+
+      <sect3 id="gui.advice">
+        <title>Tick the boxes</title>
+
+        <para>If you ask the students to tick the correct boxes, they can
+        correct a ticked box ereasing their mark with a eraser or white-out
+        fluid. However, <emphasis>they must not try to draw the boxes
+        back</emphasis>. Trying to do so, they could draw lines inside the
+        boxes, that could then be considered as ticked boxes.</para>
+
+        <para>You can also let the students correct ticked boxes filling them
+        completely. If you choose this option, you have to set the
+        <guilabel>upper darkness threshold</guilabel> (from
+        <guimenu>Preferences</guimenu> menu, <guilabel>Project</guilabel> tab)
+        to some value less than 1 (but not too low). If the darkness ratio of
+        a box is between the <guilabel>darkness threshold</guilabel> and the
+        <guilabel>upper darkness threshold</guilabel>, the box is considered
+        as been ticked. If the darkness ratio is greater than the
+        <guilabel>upper darkness ratio</guilabel>, the box is considered as
+        not ticked. </para>
       </sect3>
 
       <sect3 id="gui.correct">
-        <title>Correction of the boxes during the exam</title>
+        <title>Fill the boxes</title>
 
-        <sect4 id="gui.correct.tick">
-          <title>The student tick the boxes</title>
+        <para>When the letters (or numbers) referencing the answers are drawn
+        inside the boxes, you must tell the students to fill the correct
+        boxes, as AMC can't make the difference between a box with a letter
+        and ticked box.</para>
 
-          <itemizedlist>
-            <listitem>
-              <para>They can erase the box or overlay a correction tape but
-              should not <emphasis>redrawing the box</emphasis>.</para>
-            </listitem>
-
-            <listitem>
-              <para>They can completely darken one or more boxes to indicate
-              to AMC that these answers should not be considered <emphasis>as
-              correct</emphasis>.</para>
-
-              <para>The variable <command>Default upper darkness
-              threshold</command> (see <xref
-              endterm="preferences.defaut.title"
-              linkend="preferences.defaut"/>). must be close to 1.</para>
-            </listitem>
-          </itemizedlist>
-        </sect4>
-
-        <sect4 id="gui.correct.fill">
-          <title>The students color the boxes</title>
-
-          <itemizedlist>
-            <listitem>
-              <para>They <emphasis>must</emphasis> erase the box or overlay a
-              correction tape but should not <emphasis>redrawing the
-              box</emphasis>.</para>
-            </listitem>
-          </itemizedlist>
-
-          <para>The variable <command>Default upper darkness
-          threshold</command> ) must be equal to 1.</para>
-        </sect4>
+        <para>The stiudents can correct a ticked box ereasing their mark with
+        a eraser or white-out fluid, but they don't have any other solution to
+        correct a ticked box. You must set the <guilabel>upper darkness
+        threshold</guilabel> to 1.<guilabel/></para>
       </sect3>
     </sect2>
 
@@ -5401,13 +5391,14 @@ student number &amp; class &amp; subject\\
       </note>
 
       <note>
-        <para>You may use these two options together.</para>
-
-        <para>Type, just after <code>\begin{document}</code> <programlisting>\makeatletter
+        <para>To use this option only for the questions answers (and not for
+        the student number), type, just after <code>\begin{document}</code>
+        <programlisting>\makeatletter
 \def\setoutsidebox{\AMC@outside@boxtrue}
 \makeatother</programlisting></para>
 
-        <para>Then, to use it locally (inside braces) in the form :</para>
+        <para>Then, use this command locally (inside braces) in the form
+        :</para>
 
         <programlisting>{\setoutsidebox\AMCform}</programlisting>
       </note>

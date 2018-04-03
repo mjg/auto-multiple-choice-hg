@@ -1,3 +1,9 @@
+# MOVED!
+
+The repository has moved [here].
+
+The present repository won't change anymore, and is only kept for historical reasons.
+
 ## Overview
 
 Auto Multiple Choice is a piece of software that can help you create and manage [multiple choice] questionnaires (MCQ), with automated marking. AMC is a free software, distributed under the [GPLv2+] license.
@@ -20,6 +26,7 @@ After the exam, AMC can mark the scanned answers sheets using its in-built Optic
 
 Even if a default scoring strategy is defined, very fine customisation is available for each question. AMC then outputs an OpenDocument sheet (for use with [LibreOffice.org] or [OpenOffice.org]) with all the results.
 
+[here]:https://gitlab.com/jojo_boulix/auto-multiple-choice/
 [multiple choice]:http://en.wikipedia.org/wiki/Multiple_choice
 [GPLv2+]:http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 [LaTeX]:http://en.wikipedia.org/wiki/LaTeX
